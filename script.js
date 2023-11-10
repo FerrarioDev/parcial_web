@@ -3,6 +3,7 @@ var input = document.getElementById('inputField');
 var descriptionInput = document.getElementById('descriptionField');
 var deadlineInput = document.getElementById('deadlineField');
 var toDoContainer = document.getElementById('toDoContainer');
+var idCounter = 1; // Initialize the ID counter
 
 add.addEventListener('click', addItem);
 input.addEventListener('keypress', function(e) {
@@ -23,11 +24,17 @@ function addItem() {
 
     const item = document.createElement('div');
     item.classList.add('item');
+    item.dataset.id = idCounter; 
 
     const item_content = document.createElement('div');
     item_content.classList.add('content');
 
     item.appendChild(item_content);
+
+    // Display the ID in the card
+    const id_paragraph = document.createElement('p');
+    id_paragraph.textContent = `ID: ${idCounter}`;
+    item_content.appendChild(id_paragraph);
 
     const input_item = document.createElement('input');
     input_item.classList.add('text');
@@ -62,17 +69,19 @@ function addItem() {
 
     toDoContainer.appendChild(item);
 
+    idCounter++;
+
     input.value = '';
     descriptionInput.value = '';
     deadlineInput.value = '';
 
     edit_item.addEventListener('click', (e) => {
-        if (edit_item.innerText.toLowerCase() == "Edit") {
+        if (edit_item.innerText.toLowerCase() == "Editar") {
             edit_item.innerText = "Save";
             input_item.removeAttribute("readonly");
             input_item.focus();
         } else if (edit_item.innerText.toLowerCase() == "Save") {
-            edit_item.innerText = "Edit";
+            edit_item.innerText = "Editar";
             input_item.setAttribute("readonly", "readonly");
         }
     });
